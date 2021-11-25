@@ -220,6 +220,7 @@ class UnchunkedGenerator:
             batch_2d = np.expand_dims(np.pad(seq_2d,
                             ((self.pad + self.causal_shift, self.pad - self.causal_shift), (0, 0), (0, 0)),
                             'edge'), axis=0)
+
             if self.augment:
                 # Append flipped version
                 if batch_cam is not None:

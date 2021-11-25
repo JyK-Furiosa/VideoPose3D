@@ -125,13 +125,14 @@ class TemporalModel(TemporalModelBase):
         
     def _forward_blocks(self, x):
         x = self.drop(self.relu(self.expand_bn(self.expand_conv(x))))
-        
+        # print(x.shape)
         for i in range(len(self.pad) - 1):
             pad = self.pad[i+1]
             shift = self.causal_shift[i+1]
             res = x[:, :, pad + shift : x.shape[2] - pad + shift]
             
             x = self.drop(self.relu(self.layers_bn[2*i](self.layers_conv[2*i](x))))
+            # print(x.shape)
             x = res + self.drop(self.relu(self.layers_bn[2*i + 1](self.layers_conv[2*i + 1](x))))
         
         x = self.shrink(x)

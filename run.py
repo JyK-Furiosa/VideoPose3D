@@ -168,6 +168,7 @@ if action_filter is not None:
     
 cameras_valid, poses_valid, poses_valid_2d = fetch(subjects_test, action_filter)
 
+
 filter_widths = [int(x) for x in args.architecture.split(',')]
 if not args.disable_optimizations and not args.dense and args.stride == 1:
     # Use optimized model for single-frame predictions
@@ -228,7 +229,6 @@ print('INFO: Testing on {} frames'.format(test_generator.num_frames()))
 
 if not args.evaluate:
     cameras_train, poses_train, poses_train_2d = fetch(subjects_train, action_filter, subset=args.subset)
-
     lr = args.learning_rate
     if semi_supervised:
         cameras_semi, _, poses_semi_2d = fetch(subjects_semi, action_filter, parse_3d_poses=False)
@@ -339,11 +339,11 @@ if not args.evaluate:
 
                 inputs_2d = torch.from_numpy(batch_2d.astype('float32'))
                 inputs_2d_semi = torch.from_numpy(batch_2d_semi.astype('float32'))
+                
                 if torch.cuda.is_available():
                     inputs_2d = inputs_2d.cuda()
                     inputs_2d_semi = inputs_2d_semi.cuda()
                 inputs_2d_cat =  torch.cat((inputs_2d, inputs_2d_semi), dim=0) if not skip else inputs_2d
-
                 optimizer.zero_grad()
 
                 # Compute 3D poses
@@ -401,6 +401,7 @@ if not args.evaluate:
             for _, batch_3d, batch_2d in train_generator.next_epoch():
                 inputs_3d = torch.from_numpy(batch_3d.astype('float32'))
                 inputs_2d = torch.from_numpy(batch_2d.astype('float32'))
+                # print(inputs_2d.shape)
                 if torch.cuda.is_available():
                     inputs_3d = inputs_3d.cuda()
                     inputs_2d = inputs_2d.cuda()

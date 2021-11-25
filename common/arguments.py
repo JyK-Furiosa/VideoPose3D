@@ -12,7 +12,7 @@ def parse_args():
 
     # General arguments
     parser.add_argument('-d', '--dataset', default='h36m', type=str, metavar='NAME', help='target dataset') # h36m or humaneva
-    parser.add_argument('-k', '--keypoints', default='cpn_ft_h36m_dbb', type=str, metavar='NAME', help='2D detections to use')
+    parser.add_argument('-k', '--keypoints', default='hr_pt_coco', type=str, metavar='NAME', help='2D detections to use')
     parser.add_argument('-str', '--subjects-train', default='S1,S5,S6,S7,S8', type=str, metavar='LIST',
                         help='training subjects separated by comma')
     parser.add_argument('-ste', '--subjects-test', default='S9,S11', type=str, metavar='LIST', help='test subjects separated by comma')
@@ -30,6 +30,7 @@ def parse_args():
     parser.add_argument('--render', action='store_true', help='visualize a particular video')
     parser.add_argument('--by-subject', action='store_true', help='break down error by subject (on evaluation)')
     parser.add_argument('--export-training-curves', action='store_true', help='save training curves as .png images')
+
 
     # Model arguments
     parser.add_argument('-s', '--stride', default=1, type=int, metavar='N', help='chunk size to use during training')
